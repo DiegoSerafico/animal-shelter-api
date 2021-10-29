@@ -100,6 +100,37 @@ namespace AnimalShelter.Controllers
       return NoContent();
     }
 
+    // PATCH: api/Destinations/id
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Patch(int id, Animal animal)
+    {
+      System.Console.WriteLine("Id:" + id + ", Animal:" + animal);
+      if (id != animal.AnimalId)
+      {
+        return BadRequest();
+      }
+
+      _db.Entry(animal).State = EntityState.Modified;
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!AnimalExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return NoContent();
+    }
+
     private bool AnimalExists(int id)
     {
       return _db.Animals.Any(e => e.AnimalId == id);

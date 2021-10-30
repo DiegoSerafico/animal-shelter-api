@@ -30,7 +30,8 @@ namespace AnimalShelter
 
             services.AddDbContext<AnimalShelterContext>(opt =>
                 opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
-            services.AddControllers();
+            services.AddControllers()
+              .AddNewtonsoftJson();
             
             // Add CORS
             services.AddCors(options =>

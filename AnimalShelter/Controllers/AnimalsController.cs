@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AnimalShelter.Models;
 using System.Linq;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace AnimalShelter.Controllers
 {
@@ -102,16 +103,15 @@ namespace AnimalShelter.Controllers
 
     // PATCH: api/Destinations/id
     [HttpPatch("{id}")]
-    public async Task<IActionResult> Patch(int id, Animal animal)
+    public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<Animal> patchDoc)
     {
-      System.Console.WriteLine("Id:" + id + ", Animal:" + animal);
-      if (id != animal.AnimalId)
+      if(patchDoc == null)
       {
-        return BadRequest();
+        return BadRequest("patchDoc object is null");
       }
 
-      _db.Entry(animal).State = EntityState.Modified;
-
+      var animal = await _db.Animals.FindAsync(id);
+      patchDoc.ApplyTo(animal);
       try
       {
         await _db.SaveChangesAsync();

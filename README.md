@@ -58,11 +58,19 @@ Further exploration includes swagger documentation, enabling and testing CORS, a
 * _In order to use patch call the api http://localhost:5000/api/Animals/id with PATCH, and a json body with format shown below. You can use patch to modify the animal in several ways by adding, replacing, and removing feilds. For example the following request would update animal with ID 1 to have age 7._
 PATCH http://localhost:5000/api/Animals/1
 Body:
+```
 [
-  {"op": "replace", "path": "/age", "value" : "7" }
+  {
+    "op": "replace", "path": "/age", "value" : "7"
+  }
 ]
+```
 * _CORS allows callers to call the API from another domain. You can test CORS using CURL as follows_
+```
+
 curl -H "Origin: http://google.com" --verbose http://localhost:5000/api/animals
+
+```
 * _Swagger displays the available endpoints. You can view it by running:_
 dotnet watch run
 _then going to http://localhost:5000 in your broswer_

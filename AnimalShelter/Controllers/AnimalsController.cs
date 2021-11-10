@@ -101,7 +101,7 @@ namespace AnimalShelter.Controllers
       return NoContent();
     }
 
-    // PATCH: api/Destinations/id
+    // PATCH: api/Animals/id
     [HttpPatch("{id}")]
     public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<Animal> patchDoc)
     {
